@@ -90,3 +90,9 @@ runs:
         OPTIONS="--migrate_subscriptions"
       fi
       ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS ${{ inputs.product-file }}
+      
+  - name: Create the Product and API
+    shell: bash
+    run: |
+       ./apic-slim products:list-all --scope sandbow
+       ./apic-slim products:list-all --scope showcase
