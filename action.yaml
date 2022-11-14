@@ -98,7 +98,7 @@ runs:
       ./apic-slim apis:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
       
       echo Product for subscription
-      res=$(./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog sandbox --scope catalog) 
+      res=$(./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog) 
       gURL=$(echo ${res} | cut -d' ' -f 4)
       product_url="product_url: ${gURL}"
       echo ${product_url}>subscriber.txt
