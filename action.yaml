@@ -96,3 +96,11 @@ runs:
     run: |
       ./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
       ./apic-slim apis:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
+      echo        :
+      echo create new catalog user
+
+      res=$(./apic-slim users:create --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --user-registry sandbox-catalog user-tenth.txt)
+      sid=$(echo ${res} | cut -d' ' -f 4)
+      owner_url="owner_url: ${sid}"
+      echo ${owner_url}>>tenths-org.txt
+      cat tenths-org.txt
