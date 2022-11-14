@@ -94,4 +94,4 @@ runs:
   - name: Create the Product and API
     shell: bash
     run: |
-      ./apic-slim roles:list -s ${{ inputs.api-host }} --scope ${{ inputs.catalog }} -o ${{ inputs.provider-org }} --fields name,id,url
+      ./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
