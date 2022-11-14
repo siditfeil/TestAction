@@ -1,0 +1,92 @@
+name: 'Publish API'
+description: 'Publish API to IBM API Connect'
+inputs:
+  manager-host:  
+    description: 'API Manager hostname'
+    required: true
+  api-host:  
+    description: 'Platform API hostname'
+    required: true
+  iam-apikey:  
+    description: 'IAM API key - require this, apikey or username,password and realm'
+    required: false
+  apikey:  
+    description: 'APIC API key - require this, iam-apikey or username,password and realm'
+    required: false
+  username:  
+    description: 'API Manager username'
+    required: false
+  password:  
+    description: 'API Manager password'
+    required: false
+  realm:  
+    description: 'Realm for log in '
+    default: "provider/default-idp-2"
+    required: false
+  provider-org:  
+    description: 'Name of ID of provider org to publish to'
+    required: true
+  catalog:  
+    description: 'Name of ID of catalog to publish to'
+    required: true
+  product-file:  
+    description: 'File name of product yaml to publish'
+    required: true
+    default: 'product.yaml'
+  validate_only:
+    description: "Only validate API content"
+    required: true
+    default: 'false'
+  migrate_subscriptions:
+    description: "Migrate subscriptions on publish"
+    required: true
+    default: 'false'
+branding:
+  icon: 'upload-cloud'
+  color: 'blue'
+runs:
+  using: "composite"
+  steps:
+
+  - name: Get APIC Toolkit
+    shell: bash
+    run: |
+      curl -LO https://${{ inputs.manager-host }}/client-downloads/toolkit-linux.tgz
+      tar -zxf toolkit-linux.tgz
+
+  - name: Validate product
+    shell: bash
+    run: |
+      ./apic-slim --accept-license --live-help validate ${{ inputs.product-file }}
+
+  - name: Login to API Manager with provided credentials
+    shell: bash
+    if: ${{ inputs.validate_only == 'false' }}
+    run: |
+      if [[ "${{ inputs.iam-apikey }}" != "" ]]; then
+        echo "Using IAM API Key"
+        mkdir ~/.apiconnect/
+        touch ~/.apiconnect/token
+        ACCESS_TOKEN=$(curl -s "https://iam.cloud.ibm.com/identity/token" -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: application/json' --data "grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=${{ inputs.iam-apikey}}" | jq .access_token -r)
+        echo "${{ inputs.api-host}}/api: |
+              refresh_token: \"\"
+              access_token: ${ACCESS_TOKEN}" > ~/.apiconnect/token 
+      fi
+      if [[ "${{ inputs.apikey }}" != "" ]]; then
+        echo "Using apikey"
+        ./apic-slim login --server ${{ inputs.api-host }} --sso --apiKey ${{ inputs.apikey }} --context provider
+      fi
+      if [[ "${{ inputs.username }}" != "" ]]; then
+        echo "Using username/password"
+        ./apic-slim login --server ${{ inputs.api-host }} --username ${{ inputs.username }} --password ${{ inputs.password }} --realm ${{ inputs.realm }}
+      fi
+
+  - name: Publish product with apic CLI
+    if: ${{ inputs.validate_only == 'false' }}
+    shell: bash
+    run: |
+      if [[ "${{ inputs.migrate_subscriptions }}" == "true" ]]; then
+        echo "Enabling option to migrate subscriptions"
+        OPTIONS="--migrate_subscriptions"
+      fi
+      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS ${{ inputs.product-file }}
