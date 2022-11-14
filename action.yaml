@@ -94,5 +94,4 @@ runs:
   - name: Create the Product and API
     shell: bash
     run: |
-       ./apic-slim products:list-all --scope sandbox
-       ./apic-slim apis:list-all --scope showcase
+      ./apic roles:list -s ${{ inputs.api-host }} --scope ${{ inputs.catalog }} -o ${{ inputs.provider-org }} --fields name,id,url
