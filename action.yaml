@@ -110,7 +110,7 @@ runs:
    - name: Create and publish an initial version
     shell: bash
     run: |
-      ./apic-slim create --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog sandbox --type api --title Routes --version 1.0.0 --filename routes100.yaml
-      ./apic-slim create --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog sandbox --type product --title "Climb On" --version 1.0.0 --apis routes100.yaml --filename climbon100.yaml
-      ./apic-slim --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog sandbox publish climbon100.yaml
+      ./apic-slim create  --type api --title Routes --version 1.0.0 --filename routes100.yaml
+      ./apic-slim create --type product --title "Climb On" --version 1.0.0 --apis routes100.yaml --filename climbon100.yaml
+      ./apic-slim publish climbon100.yaml
    
