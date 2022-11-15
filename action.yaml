@@ -97,10 +97,20 @@ runs:
       ./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
       ./apic-slim apis:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
       
-      echo Product for subscription
-      res=$(./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog) 
-      gURL=$(echo ${res} | cut -d' ' -f 4)
-      product_url="product_url: ${gURL}"
-      echo ${product_url}>subscriber.txt
-      echo "plan: default">>subscriber.txt
-      cat subscriber.txt
+  - name: Publish product with apic CLI
+    if: ${{ inputs.validate_only == 'false' }}
+    shell: bash
+    run: |
+      if [[ "${{ inputs.migrate_subscriptions }}" == "true" ]]; then
+        echo "Enabling option to migrate subscriptions"
+        OPTIONS="--migrate_subscriptions"
+      fi
+      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS ${{ inputs.product-file }}
+      
+   - name: Create and publish an initial version
+    shell: bash
+    run: |
+      ./apic-slim create --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog sandbox --type api --title Routes --version 1.0.0 --filename routes100.yaml
+      ./apic-slim create --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog sandbox --type product --title "Climb On" --version 1.0.0 --apis routes100.yaml --filename climbon100.yaml
+      ./apic-slim --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog sandbox publish climbon100.yaml
+   
