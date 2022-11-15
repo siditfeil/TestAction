@@ -96,9 +96,9 @@ runs:
     run: |
       ./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
       ./apic-slim apis:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
-      ./apic-slim create:api  --title Routes --version 1.0.0 --filename routes100.yaml
-      ./apic-slim create:product --title "Climb On" --version 1.0.0 --apis routes100.yaml --filename climbon100.yaml
-      ./apic-slim publish climbon100.yaml
+      ./apic-slim create:api --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog sandbox --title Routes --version 1.0.0 --filename routes100.yaml
+      ./apic-slim create:product --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog sandbox --title "Climb On" --version 1.0.0 --apis routes100.yaml --filename climbon100.yaml
+      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog sandbox $OPTIONS climbon100.yaml 
       
   - name: Publish product with apic CLI
     if: ${{ inputs.validate_only == 'false' }}
