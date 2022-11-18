@@ -99,7 +99,7 @@ runs:
       ./apic-slim create:api --template api_template.hbs --title testapi
       ./apic-slim create:api --template apiAuth2_template.hbs --title apiAuth2
       ./apic-slim create:product --title "testproduct" --apis "testapi.yaml apiAuth2.yaml"
-      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS testproduct.yaml
+      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog test $OPTIONS testproduct.yaml
   - name: Publish product with apic CLI
     if: ${{ inputs.validate_only == 'false' }}
     shell: bash
