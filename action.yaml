@@ -96,7 +96,9 @@ runs:
     run: |
       #./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
       #./apic-slim apis:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog 
-      #./apic-slim create:api --template api_template.hbs --title testapi
+      ./apic-slim create:api --title Routes --version 1.0.0 --filename routes100.yaml
+      ./apic-slim create:product --title "Climb On" --version 1.0.0 --apis routes100.yaml --filename climbon100.yaml
+      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS testproduct.yaml
       #./apic-slim create:api --template apiAuth2_template.hbs --title apiAuth2
       #./apic-slim create:product --title "testproduct" --apis "testapi.yaml"
       #./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS testproduct.yaml
