@@ -94,12 +94,12 @@ runs:
   - name: List APis and Products
     shell: bash
     run: |
-      ./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
-      ./apic-slim apis:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog 
-      ./apic-slim create:api --template api_template.hbs --title testapi
-      ./apic-slim create:api --template apiAuth2_template.hbs --title apiAuth2
-      ./apic-slim create:product --title "testproduct" --apis "testapi.yaml"
-      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS testproduct.yaml
+      #./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
+      #./apic-slim apis:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog 
+      #./apic-slim create:api --template api_template.hbs --title testapi
+      #./apic-slim create:api --template apiAuth2_template.hbs --title apiAuth2
+      #./apic-slim create:product --title "testproduct" --apis "testapi.yaml"
+      #./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS testproduct.yaml
   - name: Publish product with apic CLI
     if: ${{ inputs.validate_only == 'false' }}
     shell: bash
