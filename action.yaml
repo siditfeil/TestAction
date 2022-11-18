@@ -96,7 +96,7 @@ runs:
     run: |
       ./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
       ./apic-slim apis:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog 
-      
+      ./apic-slim create:api --template template_file.hbs --title test_api
   - name: Publish product with apic CLI
     if: ${{ inputs.validate_only == 'false' }}
     shell: bash
