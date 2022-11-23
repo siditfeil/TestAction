@@ -100,6 +100,8 @@ runs:
       #./apic-slim create:product --title "Climb On" --version 1.0.0 --apis routes100.yaml --filename climbon100.yaml
       #./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog test $OPTIONS climbon100.yaml
       res=$(./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog)
+      echo "************** Test ici*********************"
+      echo ${res}
       gURL=$(echo ${res} | cut -d' ' -f 4)
       product_url="product_url: ${gURL}"
       echo ${product_url}
