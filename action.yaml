@@ -104,7 +104,15 @@ runs:
       echo ${res}
       gURL=$(echo ${res} | cut -d' ' -f 4)
       product_url="product_url: ${gURL}"
-      echo ${product_url}
+      echo ${product_url}>supersede.txt
+      echo        :
+
+      echo build supercede map
+      echo "plans:">>supersede.txt
+      echo "- source: default">>supersede.txt
+      echo "  target: default">>supersede.txt
+      cat supersede.txt
+      echo        :
 
   - name: Publish product with apic CLI
     if: ${{ inputs.validate_only == 'false' }}
