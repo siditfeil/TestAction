@@ -131,13 +131,7 @@ runs:
       echo "  target: default">>prodmap.txt
       
       
-      echo create new api and prod yaml locally and stage
-      
-      sed 's/version: 1.0.0/version: 2.0.0/g' api/stock.yaml > api/stock2.yaml
-      sed 's/version: 1.0.0/version: 2.0.0/g' product.yaml > product2.yaml
-      sed 's/api/stock.yaml/api/stock2.yaml/g' product2.yaml
-      
-      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --stage product2.yaml
+      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog dev api/stock:2.0.0 prodmap.txt
       
 
   - name: Publish product with apic CLI
