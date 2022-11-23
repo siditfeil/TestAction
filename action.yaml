@@ -115,7 +115,7 @@ runs:
       echo        :
       
       echo check subscriptions to existing prod
-      ./apic-slim subscriptions:list --server ${server} --app blackball --catalog sandbox --org ${porg_name} --consumer-org sidi_cons_org
+      ./apic-slim subscriptions:list --server ${{ inputs.api-host }} --app Test-app --catalog dev --org ${{ inputs.provider-org }} --consumer-org sidi_cons_org
       echo        :
       echo stage a superceding product
 
