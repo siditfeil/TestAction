@@ -94,35 +94,7 @@ runs:
   - name: List APis and Products
     shell: bash
     run: |
-      #./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog
-      #./apic-slim apis:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog 
-      #./apic-slim create:api --title Routes --version 1.0.0 --filename routes100.yaml
-      #./apic-slim create:product --title "Climb On" --version 1.0.0 --apis routes100.yaml --filename climbon100.yaml
-      #./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog test $OPTIONS climbon100.yaml
-      #res=$(./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} --scope catalog)
-      #echo "************** Test ici*********************"
-      #echo ${res}
-      #gURL=$(echo ${res} | cut -d' ' -f 4)
-      #product_url="product_url: ${gURL}"
-      #echo ${product_url}>supersede.txt
-      #echo        :
-
-      #echo build supercede map
-      #echo "plans:">>supersede.txt
-      #echo "- source: default">>supersede.txt
-      #echo "  target: default">>supersede.txt
-      #cat supersede.txt
-      #echo        :
       
-      #echo check subscriptions to existing prod
-      #./apic-slim subscriptions:list --server ${{ inputs.api-host }} --app Test-app --catalog dev --org ${{ inputs.provider-org }} --consumer-org sidi_cons_org
-      #echo        :
-      #echo stage a superceding product
-      #echo "************** Test ici 2********************************************************"
-      res=$(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS product.yaml)
-      gURL=$(echo ${res} | cut -d' ' -f 4)
-      product_url="product_url: ${gURL}"
-      echo    :
       
       # build replace product file
       echo ${product_url}>prodmap.txt
