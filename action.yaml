@@ -113,6 +113,11 @@ runs:
       echo "  target: default">>supersede.txt
       cat supersede.txt
       echo        :
+      
+      echo check subscriptions to existing prod
+      ./apic-slim subscriptions:list --server ${server} --app blackball --catalog sandbox --org ${porg_name} --consumer-org sidi_cons_org
+      echo        :
+      echo stage a superceding product
 
   - name: Publish product with apic CLI
     if: ${{ inputs.validate_only == 'false' }}
