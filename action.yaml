@@ -103,7 +103,9 @@ runs:
       res=$(./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog ${{ inputs.catalog }})
       echo ${res}>test.txt
       cat test.txt
+      echo "$$$$$$$$$$$$$$$$$$$$ Test 2 ici *************************"
       awk -v var='ordering-and-fulfillment:2.0.0' '$NF==var' test.txt
+      echo $var
       #gURL=$(echo ${res} | cut -d' ' -f 4)
       #product_url="product_url: ${gURL}"
       #echo ${product_url}>supersede.txt
