@@ -91,32 +91,30 @@ runs:
       fi
       ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS ${{ inputs.product-file }}
       
-  - name: List APis and Products
+  - name: Replace the Product
     shell: bash
     run: |
-      echo "************************************* Test Ici *************************************************"
-     
       #./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:1.0.0 --format json --output - --fields=plans
-      #./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 --format json --output - --fields=plans
-      #./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev
-      echo Published product list
+      ./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 --format json --output - 
+      
       #./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product.yaml
-      res=$(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product.yaml)
-      gURL=$(echo ${res} | cut -d' ' -f 4)
-      product_url="product_url: ${gURL}"
-      echo ${product_url}>supersede.txt
+      
+      #res=$(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product.yaml)
+      #gURL=$(echo ${res} | cut -d' ' -f 4)
+      #product_url="product_url: ${gURL}"
+      #echo ${product_url}>supersede.txt
       #cat supersede.txt
-      echo        :
+      #echo        :
 
-      echo build supercede map
-      echo "plans:">>supersede.txt
-      echo "- source: default-plan">>supersede.txt
-      echo "  target: default-plan">>supersede.txt
+      #echo build supercede map
+      #echo "plans:">>supersede.txt
+      #echo "- source: default-plan">>supersede.txt
+      #echo "  target: default-plan">>supersede.txt
       #cat supersede.txt
       echo        :
-      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product2.yaml
-      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 supersede.txt
-      ./apic-slim products:delete --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog dev ordering-and-fulfillment:1.0.0
+      #./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product2.yaml
+      #./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 supersede.txt
+      #./apic-slim products:delete --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog dev ordering-and-fulfillment:1.0.0
 
   - name: Publish product with apic CLI
     if: ${{ inputs.validate_only == 'false' }}
