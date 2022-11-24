@@ -114,7 +114,7 @@ runs:
       #cat supersede.txt
       echo        :
       
-      ./apic-slim products:supersede --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 supersede.txt
+      ./apic-slim products:supersede --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:1.0.0 supersede.txt
       
 
   - name: Publish product with apic CLI
