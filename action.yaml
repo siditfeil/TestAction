@@ -95,8 +95,10 @@ runs:
     shell: bash
     run: |
       #./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:1.0.0 --format json --output - --fields=plans
-      ./apic-slim products:list --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 --output -
-      
+      echo "******************* test ici **********************************************************"
+      res=$(./apic-slim products:list --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0)
+      echo ${resl}>test.txt
+      cat test.txt
       #./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product.yaml
       
       #res=$(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product.yaml)
