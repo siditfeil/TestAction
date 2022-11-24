@@ -107,9 +107,8 @@ runs:
       echo "  target: default">>prodmap.txt
       
       cat prodmap.txt
-      
-      
-      ./apic-slim products:supersede --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog dev stock:2.0.0 prodmap.txt
+      echo "******************** replace ici *****************************"
+      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog monproduit:2.0.0 prodmap.txt
       
 
   - name: Publish product with apic CLI
