@@ -94,32 +94,23 @@ runs:
   - name: Replace the Product
     shell: bash
     run: |
-      #./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:1.0.0 --format json --output - --fields=plans
-      echo "******************* test ici **********************************************************"
       
-      #./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product.yaml
+      echo create map file of ordering-and-fulfillment:1.0.0 product
+   
+      res=$(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product.yaml)
       
-      #res=$(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product.yaml)
-      res=$(./apic-slim products:list-all --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog ${{ inputs.catalog }})
-      echo ${res}>test.txt
-      cat test.txt
-      echo "$$$$$$$$$$$$$$$$$$$$ Test 2 ici *************************"
-      awk -v var='ordering-and-fulfillment:2.0.0' '$NF==var' test.txt
-      echo $var
-      #gURL=$(echo ${res} | cut -d' ' -f 4)
-      #product_url="product_url: ${gURL}"
-      #echo ${product_url}>supersede.txt
-      #cat supersede.txt
-      #echo        :
-
-      #echo build supercede map
-      #echo "plans:">>supersede.txt
-      #echo "- source: default-plan">>supersede.txt
-      #echo "  target: default-plan">>supersede.txt
-      #cat supersede.txt
-      echo        :
-      #./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product2.yaml
-      #./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 supersede.txt
+      gURL=$(echo ${res} | cut -d' ' -f 4)
+      product_url="product_url: ${gURL}"
+      echo ${product_url}>mapfile.txt
+      echo "plans:">>supersede.txt
+      echo "- source: default-plan">>supersede.txt
+      echo "  target: default-plan">>supersede.txt
+      
+      echo publish ordering-and-fulfillment:2.0.0 product
+      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product2.yaml
+      
+      echo replace version 1.0.0 to 2.0.0
+      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 supersede.txt
       #./apic-slim products:delete --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog dev ordering-and-fulfillment:1.0.0
 
   - name: Publish product with apic CLI
@@ -131,5 +122,10 @@ runs:
         OPTIONS="--migrate_subscriptions"
       fi
       ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS ${{ inputs.product-file }}
+      
+      
+      
+      #Get Product plans
+      #./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:1.0.0 --format json --output - --fields=plans
       
    
