@@ -100,6 +100,7 @@ runs:
       #./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 --format json --output - --fields=plans
       #./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev
       echo Published product list
+      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product.yaml
       res=$(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product2.yaml)
       gURL=$(echo ${res} | cut -d' ' -f 4)
       product_url="product_url: ${gURL}"
