@@ -96,8 +96,8 @@ runs:
     run: |
       echo "************************************* Test Ici *************************************************"
      
-      ./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog product:1.0.0 --format json --output - --fields=plans
-      ./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog product:1.0.0 --format json --output - --fields=plans
+      ./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:1.0.0 --format json --output - --fields=plans
+      ./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 --format json --output - --fields=plans
       
 
   - name: Publish product with apic CLI
