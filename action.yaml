@@ -116,7 +116,7 @@ runs:
       echo        :
       ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product2.yaml
       ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 supersede.txt
-      
+      ./apic-slim products:delete --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev ordering-and-fulfillment:2.0.0
 
   - name: Publish product with apic CLI
     if: ${{ inputs.validate_only == 'false' }}
