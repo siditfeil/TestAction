@@ -109,8 +109,8 @@ runs:
 
       echo build supercede map
       echo "plans:">>supersede.txt
-      echo "- source: default">>supersede.txt
-      echo "  target: default">>supersede.txt
+      echo "- source: default-plan">>supersede.txt
+      echo "  target: default-plan">>supersede.txt
       #cat supersede.txt
       echo        :
       
