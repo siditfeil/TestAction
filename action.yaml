@@ -108,7 +108,7 @@ runs:
       
       cat prodmap.txt
       echo "******************** replace ici *****************************"
-      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog monproduit:2.0.0 prodmap.txt
+      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev monproduit:2.0.0
       
 
   - name: Publish product with apic CLI
