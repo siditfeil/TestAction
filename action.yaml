@@ -102,15 +102,15 @@ runs:
       gURL=$(echo ${res} | cut -d' ' -f 4)
       product_url="product_url: ${gURL}"
       echo ${product_url}>mapfile.txt
-      echo "plans:">>supersede.txt
-      echo "- source: default-plan">>supersede.txt
-      echo "  target: default-plan">>supersede.txt
+      echo "plans:">>mapfile.txt
+      echo "- source: default-plan">>mapfile.txt
+      echo "  target: default-plan">>mapfile.txt
       
       echo publish ordering-and-fulfillment:2.0.0 product
       ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product2.yaml
       
       echo replace version 1.0.0 to 2.0.0
-      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 supersede.txt
+      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 mapfile.txt
       #./apic-slim products:delete --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog dev ordering-and-fulfillment:1.0.0
 
   - name: Publish product with apic CLI
