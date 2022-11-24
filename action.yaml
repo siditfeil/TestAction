@@ -95,6 +95,10 @@ runs:
     shell: bash
     run: |
       
+      res=(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev $OPTIONS ${{ inputs.product-file }})
+      gURL=$(echo ${res} | cut -d' ' -f 4)
+      product_url="product_url: ${gURL}"
+      
       
       # build replace product file
       echo ${product_url}>prodmap.txt
