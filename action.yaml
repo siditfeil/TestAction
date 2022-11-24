@@ -111,7 +111,7 @@ runs:
       ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --stage $OPTIONS product2.yaml
       
       echo replace published with staged product
-      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog stock:2.0.0 prodmapfile.txt
+      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog product:2.0.0 prodmapfile.txt
       
       
       #./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog monproduit:1.0.0 --format json --output - --fields=plans
