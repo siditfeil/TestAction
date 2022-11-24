@@ -102,6 +102,7 @@ runs:
       echo Published product list
       #./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product.yaml
       res=$(./apic-slim products:get --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog ${{ inputs.catalog }} ordering-and-fulfillment:2.0.0)
+      echo $res
       gURL=$(echo ${res} | cut -d' ' -f 4)
       product_url="product_url: ${gURL}"
       echo ${product_url}>supersede.txt
