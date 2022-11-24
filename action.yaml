@@ -94,8 +94,8 @@ runs:
   - name: List APis and Products
     shell: bash
     run: |
-      
-      res=(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev $OPTIONS ${{ inputs.product-file }})
+      echo "************************************* Test Ici *************************************************"
+      res=$(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev $OPTIONS ${{ inputs.product-file }})
       gURL=$(echo ${res} | cut -d' ' -f 4)
       product_url="product_url: ${gURL}"
       
@@ -105,6 +105,8 @@ runs:
       echo "plans:">>prodmap.txt
       echo "- source: default">>prodmap.txt
       echo "  target: default">>prodmap.txt
+      
+      cat prodmap.txt
       
       
       ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog dev api/stock:2.0.0 prodmap.txt
