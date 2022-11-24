@@ -109,7 +109,7 @@ runs:
       cat prodmap.txt
       
       
-      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog dev api/stock:2.0.0 prodmap.txt
+      ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --scope catalog --catalog dev stock:2.0.0 prodmap.txt
       
 
   - name: Publish product with apic CLI
