@@ -92,12 +92,13 @@ runs:
       ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} $OPTIONS ${{ inputs.product-file }}
       
   - name: Replace the Product
+    if: ${{ inputs.catalog == 'dev' }}
     shell: bash
     run: |
       
       echo create map file of ordering-and-fulfillment:1.0.0 product
    
-      res=$(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product.yaml)
+      res=$(./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev product.yaml)
       
       gURL=$(echo ${res} | cut -d' ' -f 4)
       product_url="product_url: ${gURL}"
@@ -107,7 +108,7 @@ runs:
       echo "  target: default-plan">>mapfile.txt
       
       echo publish ordering-and-fulfillment:2.0.0 product
-      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog ${{ inputs.catalog }} product2.yaml
+      ./apic-slim products:publish --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev product2.yaml
       
       echo replace version 1.0.0 to 2.0.0
       ./apic-slim products:replace --server ${{ inputs.api-host }} --org ${{ inputs.provider-org }} --catalog dev --scope catalog ordering-and-fulfillment:2.0.0 mapfile.txt
